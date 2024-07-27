@@ -68,6 +68,10 @@ public class UIManager : BaseBehaviour
         _popupStack.Push(popup);
     }
 
+    public void OpenTimeScaleNotice(string text)
+    {
+
+    }
     public void CloseAllPopup()
     {
         while (_popupStack.Count > 0)

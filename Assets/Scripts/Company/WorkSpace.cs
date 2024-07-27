@@ -23,6 +23,7 @@ public class WorkSpace : BaseBehaviour
         EmployeeManager.Instance.EventEmployee.OnEmployeeHired += Event_EmployeeHired;
         EmployeeManager.Instance.EventEmployee.OnEmployeeFired += Event_EmployeeFired;
         EmployeeManager.Instance.EventEmployee.OnEmployeeLeaveWork += Event_LeaveWorkEmployee;
+        EmployeeManager.Instance.EventEmployee.OnEmployeeGoToWork += Event_GoToWorkEmployee;
         UpgradeManager.Instance.EventUpgrade.OnCompanyUpgrade += Event_CompanyUpgraded;
 
     }
@@ -32,6 +33,7 @@ public class WorkSpace : BaseBehaviour
         EmployeeManager.Instance.EventEmployee.OnEmployeeHired -= Event_EmployeeHired;
         EmployeeManager.Instance.EventEmployee.OnEmployeeFired -= Event_EmployeeFired;
         EmployeeManager.Instance.EventEmployee.OnEmployeeLeaveWork -= Event_LeaveWorkEmployee;
+        EmployeeManager.Instance.EventEmployee.OnEmployeeGoToWork -= Event_GoToWorkEmployee;
         UpgradeManager.Instance.EventUpgrade.OnCompanyUpgrade -= Event_CompanyUpgraded;
     }
 
@@ -49,6 +51,10 @@ public class WorkSpace : BaseBehaviour
     private void Event_LeaveWorkEmployee(EmployeeLeaveWorkEventArgs employeeLeaveWorkEventArgs)
     {
         _employees[employeeLeaveWorkEventArgs.index].SetActive(false);
+    }
+    private void Event_GoToWorkEmployee(EmployeeGoToWorkEventArgs employeeGoToWorkEventArgs)
+    {
+        _employees[employeeGoToWorkEventArgs.index].SetActive(true);
     }
     private void Event_CompanyUpgraded()
     {

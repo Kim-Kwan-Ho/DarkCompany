@@ -8,9 +8,11 @@ public class EmployeeEvent : MonoBehaviour
     public Action<EmployeeHiredEventArgs> OnEmployeeHired;
     public Action<EmployeeFireEventArgs> OnEmployeeFired;
     public Action<EmployeeLeaveWorkEventArgs> OnEmployeeLeaveWork;
+    public Action<EmployeeGoToWorkEventArgs> OnEmployeeGoToWork;
     public Action<EmployeeRequestPayEventArgs> OnEmployeeRequestPay;
     public Action<EmployeeStressedEventArgs> OnEmployeeStressed;
     public Action<EmployeeMadeMoneyEventArgs> OnEmployeeMadeMoney;
+    public Action<EmployeeGetPayedEventArgs> OnEmployeeGetPayed;
     public void CallEmployeeHired(EmployeeStats stat, int index)
     {
         OnEmployeeHired?.Invoke(new EmployeeHiredEventArgs() { stat = stat, index = index });
@@ -26,6 +28,10 @@ public class EmployeeEvent : MonoBehaviour
         OnEmployeeLeaveWork?.Invoke(new EmployeeLeaveWorkEventArgs() { stat = stat, time = time, index = index });
     }
 
+    public void CallEmployeeGoToWork(int index)
+    {
+        OnEmployeeGoToWork?.Invoke(new EmployeeGoToWorkEventArgs() { index = index });
+    }
     public void CallEmployeeRequestPay(int index)
     {
         OnEmployeeRequestPay?.Invoke(new EmployeeRequestPayEventArgs() { index = index });
@@ -39,6 +45,11 @@ public class EmployeeEvent : MonoBehaviour
     public void CallEmployeeMadeMoney(int index, int amount)
     {
         OnEmployeeMadeMoney?.Invoke(new EmployeeMadeMoneyEventArgs() { index = index, amount = amount });
+    }
+
+    public void CallEmployeeGetPayed(int index)
+    {
+        OnEmployeeGetPayed?.Invoke(new EmployeeGetPayedEventArgs() { index = index });
     }
 }
 
@@ -76,4 +87,14 @@ public class EmployeeMadeMoneyEventArgs : EventArgs
 {
     public int index;
     public int amount;
+}
+
+public class EmployeeGoToWorkEventArgs : EventArgs
+{
+    public int index;
+}
+
+public class EmployeeGetPayedEventArgs : EventArgs
+{
+    public int index;
 }

@@ -773,6 +773,8 @@ MonoBehaviour:
   _employeeStatInfo: {fileID: 7219688988848955725, guid: 2f8752db849e4a041836536839b4905b, type: 3}
   _statInfo: {fileID: 0}
   _indexText: {fileID: 7118619602295285024}
+  _givePayButton: {fileID: 1981839503254933273}
+  _stressFillImage: {fileID: 3096943247030404489}
 --- !u!1 &5940881876484126483
 GameObject:
   m_ObjectHideFlags: 0
@@ -1190,6 +1192,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7909305913446927022}
     m_Modifications:
+    - target: {fileID: 789732459821340002, guid: a14f7813a35901744abc47e1dc2a0633, type: 3}
+      propertyPath: m_Name
+      value: StressFillImage
+      objectReference: {fileID: 0}
     - target: {fileID: 5012670631880428232, guid: a14f7813a35901744abc47e1dc2a0633, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1293,3 +1299,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7506974481795949003, guid: a14f7813a35901744abc47e1dc2a0633, type: 3}
   m_PrefabInstance: {fileID: 5383812560257784710}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3096943247030404489 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6939388994504973839, guid: a14f7813a35901744abc47e1dc2a0633, type: 3}
+  m_PrefabInstance: {fileID: 5383812560257784710}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

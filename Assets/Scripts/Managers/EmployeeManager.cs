@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -39,20 +40,33 @@ public class EmployeeManager : BaseBehaviour
 
     private void OnEnable()
     {
+        GameSceneManager.Instance.EventGameScene.OnTimeChanged += Event_TimeChanged;
         GameSceneManager.Instance.EventGameScene.OnNewDayStart += Event_OnNewDayStart;
         EventEmployee.OnEmployeeFired += Event_EmployFired;
+        EventEmployee.OnEmployeeGetPayed += Event_EmployeeGetPayed;
     }
 
     private void OnDisable()
     {
+        GameSceneManager.Instance.EventGameScene.OnTimeChanged -= Event_TimeChanged;
         GameSceneManager.Instance.EventGameScene.OnNewDayStart -= Event_OnNewDayStart;
         EventEmployee.OnEmployeeFired -= Event_EmployFired;
+        EventEmployee.OnEmployeeGetPayed -= Event_EmployeeGetPayed;
     }
 
-
+    private void Event_TimeChanged()
+    {
+        foreach (var VARIABLE in _employees)
+        {
+            if (VARIABLE != null)
+            {
+                VARIABLE.IncreaseTime();
+            }
+        }
+    }
     private void Event_OnNewDayStart()
     {
-        WakeUpEmployee();
+        GoToWorkEmployees();
         CreateNewEmployee();
     }
 
@@ -68,13 +82,13 @@ public class EmployeeManager : BaseBehaviour
         }
     }
 
-    private void WakeUpEmployee()
+    private void GoToWorkEmployees()
     {
         for (int i = 0; i < _employees.Length; i++)
         {
             if (_employees[i] != null)
             {
-                _employees[i].IsSleeping = false;
+                _employees[i].GoToWorkEmployee();
             }
         }
     }
@@ -110,6 +124,11 @@ public class EmployeeManager : BaseBehaviour
     {
         _employeeCount--;
         _employees[employeeFireEventArgs.index] = null;
+    }
+
+    private void Event_EmployeeGetPayed(EmployeeGetPayedEventArgs employeeGetPayedEventArgs)
+    {
+        _employees[employeeGetPayedEventArgs.index].GetPayed();
     }
 #if UNITY_EDITOR
     protected override void OnBindField()
