@@ -17,6 +17,9 @@ public class EmployeeManager : BaseBehaviour
     private EmployeeStats[] _employees;
     public EmployeeStats[] Employees { get { return _employees; } }
     private int _employeeCount;
+
+
+    public float PayBuff;
     protected override void Awake()
     {
         base.Awake();
@@ -42,16 +45,20 @@ public class EmployeeManager : BaseBehaviour
     {
         GameSceneManager.Instance.EventGameScene.OnTimeChanged += Event_TimeChanged;
         GameSceneManager.Instance.EventGameScene.OnNewDayStart += Event_OnNewDayStart;
+        GameSceneManager.Instance.EventGameScene.OnRequestNewDay += Event_OnNewDayRequest;
         EventEmployee.OnEmployeeFired += Event_EmployFired;
         EventEmployee.OnEmployeeGetPayed += Event_EmployeeGetPayed;
+        EventEmployee.OnEmployeeDeath += Event_EmployeeDeath;
     }
 
     private void OnDisable()
     {
         GameSceneManager.Instance.EventGameScene.OnTimeChanged -= Event_TimeChanged;
         GameSceneManager.Instance.EventGameScene.OnNewDayStart -= Event_OnNewDayStart;
+        GameSceneManager.Instance.EventGameScene.OnRequestNewDay -= Event_OnNewDayRequest;
         EventEmployee.OnEmployeeFired -= Event_EmployFired;
         EventEmployee.OnEmployeeGetPayed -= Event_EmployeeGetPayed;
+        EventEmployee.OnEmployeeDeath -= Event_EmployeeDeath;
     }
 
     private void Event_TimeChanged()
@@ -64,9 +71,14 @@ public class EmployeeManager : BaseBehaviour
             }
         }
     }
+    private void Event_OnNewDayRequest()
+    {
+        PayBuff = 0;
+        GoToWorkEmployees();
+    }
+
     private void Event_OnNewDayStart()
     {
-        GoToWorkEmployees();
         CreateNewEmployee();
     }
 
@@ -108,6 +120,17 @@ public class EmployeeManager : BaseBehaviour
         }
     }
 
+    public void InDeCreaseEmployeesStress(bool increase, int amount)
+    {
+        for (int i = 0; i < _employees.Length; i++)
+        {
+            if (_employees[i] != null)
+            {
+                _employees[i].InDeCreaseStress(increase, amount);
+            }
+        }
+    }
+
     public bool CanHireEmployee()
     {
         if (_employeeCount < UpgradeManager.Instance.CompanyLevel * 2)
@@ -119,7 +142,6 @@ public class EmployeeManager : BaseBehaviour
             return false;
         }
     }
-
     private void Event_EmployFired(EmployeeFireEventArgs employeeFireEventArgs)
     {
         _employeeCount--;
@@ -129,6 +151,12 @@ public class EmployeeManager : BaseBehaviour
     private void Event_EmployeeGetPayed(EmployeeGetPayedEventArgs employeeGetPayedEventArgs)
     {
         _employees[employeeGetPayedEventArgs.index].GetPayed();
+    }
+
+    private void Event_EmployeeDeath(EmployeeDeathEventArgs employeeDeathEventArgs)
+    {
+        _employees[employeeDeathEventArgs.index] = null;
+        _employeeCount--;
     }
 #if UNITY_EDITOR
     protected override void OnBindField()

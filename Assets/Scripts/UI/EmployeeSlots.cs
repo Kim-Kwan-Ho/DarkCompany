@@ -44,6 +44,8 @@ public class EmployeeSlots : BaseBehaviour
     }
 
 
+
+
 #if UNITY_EDITOR
     protected override void OnBindField()
     {

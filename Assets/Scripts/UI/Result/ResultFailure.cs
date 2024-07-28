@@ -22,11 +22,11 @@ public class ResultFailure : BaseBehaviour
 
     public void SetResult(int day, int currentMoney, int charge)
     {
-        _dayText.text = day.ToString();
+        _dayText.text = day.ToString() + "ÀÏÂ÷";
         _currentMoneyText.text = currentMoney.ToString();
-        _chargeText.text = charge.ToString();
+        _chargeText.text = "-" +charge.ToString();
         int totalMoney = currentMoney - charge;
-        _totalMoneyText.text = "- " + totalMoney.ToString();
+        _totalMoneyText.text = totalMoney.ToString();
     }
 
 

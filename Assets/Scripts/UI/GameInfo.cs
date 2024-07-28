@@ -8,7 +8,6 @@ public class GameInfo : BaseBehaviour
     [SerializeField] private TextMeshProUGUI _timeText;
 
     [Header("Money Texts")]
-    [SerializeField] private TextMeshProUGUI _incomeText;
     [SerializeField] private TextMeshProUGUI _chargeText;
     [SerializeField] private TextMeshProUGUI _moneyText;
 
@@ -19,11 +18,8 @@ public class GameInfo : BaseBehaviour
     {
         _dayText.text = GameSceneManager.Instance.Day.ToString();
         _timeText.text = GameSceneManager.Instance.GameTime.ToString("D2") + ":00";
-        _incomeText.text = GameSceneManager.Instance.TodayIncome.ToString();
         _chargeText.text = GameSceneManager.Instance.Charge.ToString();
         _moneyText.text = GameSceneManager.Instance.CurrentMoney.ToString();
-
-
     }
 
 
@@ -35,7 +31,6 @@ public class GameInfo : BaseBehaviour
         _dayText = FindGameObjectInChildren<TextMeshProUGUI>("DayText");
         _timeText = FindGameObjectInChildren<TextMeshProUGUI>("TimeText");
 
-        _incomeText = FindGameObjectInChildren<TextMeshProUGUI>("IncomeText");
         _chargeText = FindGameObjectInChildren<TextMeshProUGUI>("ChargeText");
         _moneyText = FindGameObjectInChildren<TextMeshProUGUI>("MoneyText");
     }

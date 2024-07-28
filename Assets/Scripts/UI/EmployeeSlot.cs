@@ -28,11 +28,13 @@ public class EmployeeSlot : BaseBehaviour
     private void OnEnable()
     {
         EmployeeManager.Instance.EventEmployee.OnEmployeeFired += Event_EmployeeFired;
+        EmployeeManager.Instance.EventEmployee.OnEmployeeDeath += Event_OnEmployeeDeath;
     }
 
     private void OnDisable()
     {
         EmployeeManager.Instance.EventEmployee.OnEmployeeFired -= Event_EmployeeFired;
+        EmployeeManager.Instance.EventEmployee.OnEmployeeDeath -= Event_OnEmployeeDeath;
     }
 
 
@@ -88,7 +90,13 @@ public class EmployeeSlot : BaseBehaviour
             _stats = null;
         }
     }
-
+    private void Event_OnEmployeeDeath(EmployeeDeathEventArgs employeeDeathEventArgs)
+    {
+        if (_index == employeeDeathEventArgs.index)
+        {
+            _stats = null;
+        }
+    }
     private void PayEmployee()
     {
         if (GameSceneManager.Instance.CurrentMoney >= _stats.Pay)

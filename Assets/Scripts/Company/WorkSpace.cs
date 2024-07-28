@@ -24,6 +24,9 @@ public class WorkSpace : BaseBehaviour
         EmployeeManager.Instance.EventEmployee.OnEmployeeFired += Event_EmployeeFired;
         EmployeeManager.Instance.EventEmployee.OnEmployeeLeaveWork += Event_LeaveWorkEmployee;
         EmployeeManager.Instance.EventEmployee.OnEmployeeGoToWork += Event_GoToWorkEmployee;
+        EmployeeManager.Instance.EventEmployee.OnEmployeeMadeMoney += Event_EmployeeMadeMoney;
+        EmployeeManager.Instance.EventEmployee.OnEmployeeStressed += Event_EmployeeStressed;
+        EmployeeManager.Instance.EventEmployee.OnEmployeeDeath += Event_EmployeeDeath;
         UpgradeManager.Instance.EventUpgrade.OnCompanyUpgrade += Event_CompanyUpgraded;
 
     }
@@ -34,6 +37,9 @@ public class WorkSpace : BaseBehaviour
         EmployeeManager.Instance.EventEmployee.OnEmployeeFired -= Event_EmployeeFired;
         EmployeeManager.Instance.EventEmployee.OnEmployeeLeaveWork -= Event_LeaveWorkEmployee;
         EmployeeManager.Instance.EventEmployee.OnEmployeeGoToWork -= Event_GoToWorkEmployee;
+        EmployeeManager.Instance.EventEmployee.OnEmployeeMadeMoney -= Event_EmployeeMadeMoney;
+        EmployeeManager.Instance.EventEmployee.OnEmployeeStressed -= Event_EmployeeStressed;
+        EmployeeManager.Instance.EventEmployee.OnEmployeeDeath -= Event_EmployeeDeath;
         UpgradeManager.Instance.EventUpgrade.OnCompanyUpgrade -= Event_CompanyUpgraded;
     }
 
@@ -62,4 +68,17 @@ public class WorkSpace : BaseBehaviour
         _index++;
     }
 
+    private void Event_EmployeeDeath(EmployeeDeathEventArgs employeeDeathEventArgs)
+    {
+        _employees[employeeDeathEventArgs.index].SetActive(false);
+    }
+
+    private void Event_EmployeeMadeMoney(EmployeeMadeMoneyEventArgs employeeMadeMoneyEventArgs)
+    {
+        UIManager.Instance.InstantiateChangeText("+" + employeeMadeMoneyEventArgs.amount, Color.green, _employees[employeeMadeMoneyEventArgs.index].transform.position);
+    }
+    private void Event_EmployeeStressed(EmployeeStressedEventArgs employeeStressedEventArgs)
+    {
+        UIManager.Instance.InstantiateChangeText("스트레스+" + employeeStressedEventArgs.amount, Color.red, _employees[employeeStressedEventArgs.index].transform.position + new Vector3(0, 0.5f, 0));
+    }
 }

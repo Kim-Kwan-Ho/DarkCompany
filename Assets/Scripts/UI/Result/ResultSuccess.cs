@@ -20,11 +20,11 @@ public class ResultSuccess : BaseBehaviour
     {
         _dayText.text = day.ToString() + "ÀÏÂ÷";
         _incomeText.text = "+ " + income.ToString();
-        _chargeText.text = "+ " + charge.ToString();
+        _chargeText.text = "- " + charge.ToString();
 
         int totalMoney = income - charge;
         _totalMoneyText.color = totalMoney >= 0 ? GameColor.MONEY_GREEN : GameColor.MONEY_RED;
-        _totalMoneyText.text += totalMoney >= 0 ? "+ " : "- ";
+        _totalMoneyText.text += totalMoney >= 0 ? "+ " :"";
 
         _totalMoneyText.text += totalMoney.ToString();
     }

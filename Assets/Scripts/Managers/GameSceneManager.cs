@@ -55,6 +55,7 @@ public class GameSceneManager : BaseBehaviour
         base.Initialize();
         _gameTime = GameRule.COMPANY_OPEN_TIME;
         _realTime = 0;
+        _charge = GameRule.COMPANY_CHARGE_INCREASE;
         _currentMoney = GameRule.COMPANY_START_MONEY;
         _gameStopped = true;
     }
@@ -121,6 +122,8 @@ public class GameSceneManager : BaseBehaviour
     {
         _day++;
         _todayIncome = 0;
+        _currentMoney -= _charge;
+        _charge += GameRule.COMPANY_CHARGE_INCREASE;
         _gameTime = GameRule.COMPANY_OPEN_TIME;
     }
     private void Event_MoneyChanged(int amount)

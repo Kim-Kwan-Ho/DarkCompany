@@ -14,6 +14,8 @@ public class GameSceneEvent : MonoBehaviour
     public Action OnTimeChanged;
 
     public Action<int> OnMoneyChanged;
+    public Action OnGameFailed;
+
     public void CallNewDayStart()
     {
         OnNewDayStart?.Invoke();
@@ -42,6 +44,11 @@ public class GameSceneEvent : MonoBehaviour
     public void CallRequestNewDay()
     {
         OnRequestNewDay?.Invoke();
+    }
+
+    public void CallGameFailed()
+    {
+        OnGameFailed?.Invoke();
     }
 }
 

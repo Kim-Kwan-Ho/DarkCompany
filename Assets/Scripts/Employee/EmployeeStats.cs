@@ -18,6 +18,7 @@ public class EmployeeStats
     public int Stress;
     public bool IsSleeping;
     private int _index;
+    private bool _isDeath;
     public int Index { get { return _index; } }
     public EmployeeStats()
     {
@@ -27,6 +28,7 @@ public class EmployeeStats
         Stress = GameRule.STRESS_MIN;
         Pay = Random.Range(GameProbability.EMPLOYEE_START_PAY_MIN, GameProbability.EMPLOYEE_START_PAY_MAX);
         PayTime = GameRule.PAY_TIME;
+        _isDeath = false;
         int totalStat = Random.Range(GameProbability.EMPLOYEE_START_STATS_MIN, GameProbability.EMPLOYEE_START_STATS_MAX) - 3;
 
         Ability += Random.Range(0, totalStat + 1);
@@ -60,16 +62,24 @@ public class EmployeeStats
     {
         if (IsSleeping)
             return;
+
+        CheckWorkTime();
         CheckPayTime();
         MakeMoney();
     }
 
+    private void CheckWorkTime()
+    {
+        if (GameSceneManager.Instance.GameTime > GameRule.COMPANY_LEAVE_TIME)
+        {
+            IncreaseStress(true, 20);
+        }
+    }
     private void CheckPayTime()
     {
-        Debug.Log("Q");
         if (PayTime <= 0)
         {
-            IncreaseStress(true);
+            IncreaseStress(true, 10);
         }
         else if (PayTime == 1)
         {
@@ -82,29 +92,66 @@ public class EmployeeStats
         }
     }
 
+    public void GoHome()
+    {
+        IsSleeping = true;
+        if (GameSceneManager.Instance.GameTime >= GameRule.COMPANY_CLOSE_TIME)
+            return;
+        Stress -= (GameRule.COMPANY_CLOSE_TIME - GameSceneManager.Instance.GameTime) * GameRule.STRESS_DECREASE_AMOUNT;
+        if (Stress < 0)
+            Stress = 0;
+    }
     private void MakeMoney()
     {
         //이것도 고쳐야함
-        EmployeeManager.Instance.EventEmployee.CallEmployeeMadeMoney(_index, 100);
-        GameSceneManager.Instance.EventGameScene.CallMoneyChanged(100);
+        int amount = 100;
+        amount += (int)(amount * (EmployeeManager.Instance.PayBuff / 100f));
+        EmployeeManager.Instance.EventEmployee.CallEmployeeMadeMoney(_index, amount);
+        GameSceneManager.Instance.EventGameScene.CallMoneyChanged(amount);
     }
-    private void IncreaseStress(bool paymentStressed)
+    public void IncreaseStress(bool paymentStressed, int amount)
     {
         // 고쳐야함
-        int amount = 10;
+        if (_isDeath)
+            return;
+
         Stress += amount;
         Stress = Math.Min(Stress, 200);
         EmployeeManager.Instance.EventEmployee.CallEmployeeStressed(_index, amount);
 
         if (Stress == 200)
         {
+            _isDeath = true;
+            EmployeeDeath();
+        }
+    }
+
+    public void InDeCreaseStress(bool increase, int amount)
+    {
+        if (increase)
+        {
+            Stress += amount;
+        }
+        else
+        {
+            Stress -= amount;
+        }
+        if (Stress > 200)
+            Stress = 200;
+        else if (Stress < 0)
+            Stress = 0;
+
+        if (Stress == 200)
+        {
+            _isDeath = true;
             EmployeeDeath();
         }
     }
 
     private void EmployeeDeath()
     {
-        Time.timeScale = 0;
+        UIManager.Instance.OpenWarningPopup(Name + "이 스트레스로 인해 사망하였습니다.");
+        EmployeeManager.Instance.EventEmployee.CallEmployeeDeath(_index);
 
     }
     public void GoToWorkEmployee()

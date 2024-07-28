@@ -41,7 +41,7 @@ public class EmployeeInfo : BaseBehaviour
     }
 
 
-
+#if UNITY_EDITOR
     protected override void OnBindField()
     {
         base.OnBindField();
@@ -52,7 +52,7 @@ public class EmployeeInfo : BaseBehaviour
         _considerateText = FindGameObjectInChildren<TextMeshProUGUI>("ConsiderateText");
         _hireButton = FindGameObjectInChildren<Button>("HireButton");
     }
-
+#endif
 
 
 }

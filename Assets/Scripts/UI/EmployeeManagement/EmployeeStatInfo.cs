@@ -56,7 +56,8 @@ public class EmployeeStatInfo : UIPopup
     private void LeaveWorkEmployee()
     {
         EmployeeManager.Instance.EventEmployee.CallEmployeeLeaveWork(_stats, GameSceneManager.Instance.GameTime, _index);
-        _stats.IsSleeping = true;
+        _stats.GoHome();
+
     }
     private void Update()
     {
