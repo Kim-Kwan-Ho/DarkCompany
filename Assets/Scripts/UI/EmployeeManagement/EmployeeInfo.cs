@@ -12,6 +12,7 @@ public class EmployeeInfo : BaseBehaviour
     [SerializeField] private TextMeshProUGUI _payText;
     [SerializeField] private TextMeshProUGUI _considerateText;
     [SerializeField] private Button _hireButton;
+    [SerializeField] private TextMeshProUGUI _skillText;
 
     private EmployeeStats _stats;
 
@@ -29,6 +30,19 @@ public class EmployeeInfo : BaseBehaviour
         _considerateText.text = stats.Considerate + "/" + stats.MaxConsiderate;
         _payText.text = stats.Pay.ToString();
         _stats = stats;
+        _skillText.text = "";
+
+        foreach (var VARIABLE in stats.EmployeeSkills)
+        {
+            if (VARIABLE.IsPositive)
+            {
+                _skillText.text += $"<color=green>{VARIABLE.SkillName} ";
+            }
+            else
+            {
+                _skillText.text += $"<color=red>{VARIABLE.SkillName} ";
+            }
+        }
     }
 
     private void HireEmployee()
@@ -51,6 +65,7 @@ public class EmployeeInfo : BaseBehaviour
         _payText = FindGameObjectInChildren<TextMeshProUGUI>("PayText");
         _considerateText = FindGameObjectInChildren<TextMeshProUGUI>("ConsiderateText");
         _hireButton = FindGameObjectInChildren<Button>("HireButton");
+        _skillText = FindGameObjectInChildren<TextMeshProUGUI>("SkillText");
     }
 #endif
 

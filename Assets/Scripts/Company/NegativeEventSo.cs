@@ -11,7 +11,7 @@ public class NegativeEventSo : CompanyEventSO
         switch (EventType)
         {
             case ECompanyNegativeEvent.MoneyDecrease:
-                GameSceneManager.Instance.EventGameScene.CallMoneyChanged(_amount);
+                GameSceneManager.Instance.EventGameScene.CallMoneyChanged(-_amount);
                 UIManager.Instance.OpenEventPopup($"사기를 당해 {_amount}의 금액을 손해봤습니다.");
                 break;
             case ECompanyNegativeEvent.MoneyDecreaseBuff:

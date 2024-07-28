@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,11 +20,13 @@ public class EmployeeStatInfo : UIPopup
     [SerializeField] private Button _fireButton;
     [SerializeField] private Button _closeButton;
     private int _index;
+    private string _skills;
 
     protected override void Initialize()
     {
         base.Initialize();
         _closeButton.onClick.AddListener(ClosePopup);
+        _skills = "";
     }
 
     private void OnEnable()
@@ -67,6 +70,21 @@ public class EmployeeStatInfo : UIPopup
         _considerateText.text = $"{_stats.Considerate}/{_stats.MaxConsiderate}";
         _gutsText.text = $"{_stats.Guts}/{_stats.MaxGuts}";
         _payText.text = $"{_stats.Pay}$";
+
+        _skills = "";
+        foreach (var VARIABLE in _stats.EmployeeSkills)
+        {
+            if (VARIABLE.IsPositive)
+            {
+                _skills += $"<color=green>{VARIABLE.SkillName} ";
+            }
+            else
+            {
+                _skills += $"<color=red>{VARIABLE.SkillName} ";
+            }
+        }
+
+        _skillsText.text = _skills;
     }
 
 

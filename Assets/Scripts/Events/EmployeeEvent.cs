@@ -14,6 +14,7 @@ public class EmployeeEvent : MonoBehaviour
     public Action<EmployeeMadeMoneyEventArgs> OnEmployeeMadeMoney;
     public Action<EmployeeGetPayedEventArgs> OnEmployeeGetPayed;
     public Action<EmployeeDeathEventArgs> OnEmployeeDeath;
+    public Action<EmployeeSkillAddedEventArgs> OnEmployeeSkillAdded;
     public void CallEmployeeHired(EmployeeStats stat, int index)
     {
         OnEmployeeHired?.Invoke(new EmployeeHiredEventArgs() { stat = stat, index = index });
@@ -57,6 +58,15 @@ public class EmployeeEvent : MonoBehaviour
     {
         OnEmployeeDeath?.Invoke(new EmployeeDeathEventArgs() { index = index });
     }
+
+    public void CallEmployeeSkillAdded(int index)
+    {
+        OnEmployeeSkillAdded?.Invoke(new EmployeeSkillAddedEventArgs() { index = index });
+    }
+
+
+
+
 }
 
 
@@ -106,6 +116,11 @@ public class EmployeeGetPayedEventArgs : EventArgs
 }
 
 public class EmployeeDeathEventArgs : EventArgs
+{
+    public int index;
+}
+
+public class EmployeeSkillAddedEventArgs : EventArgs
 {
     public int index;
 }

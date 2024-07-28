@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using Random = UnityEngine.Random;
 
 
 [RequireComponent(typeof(EmployeeEvent))]
@@ -20,6 +20,7 @@ public class EmployeeManager : BaseBehaviour
 
 
     public float PayBuff;
+    [SerializeField] private EmployeeSkill[] _employeeSkills;
     protected override void Awake()
     {
         base.Awake();
@@ -49,6 +50,7 @@ public class EmployeeManager : BaseBehaviour
         EventEmployee.OnEmployeeFired += Event_EmployFired;
         EventEmployee.OnEmployeeGetPayed += Event_EmployeeGetPayed;
         EventEmployee.OnEmployeeDeath += Event_EmployeeDeath;
+        EventEmployee.OnEmployeeSkillAdded += Event_OnEmployeeSkillAdded;
     }
 
     private void OnDisable()
@@ -58,6 +60,7 @@ public class EmployeeManager : BaseBehaviour
         GameSceneManager.Instance.EventGameScene.OnRequestNewDay -= Event_OnNewDayRequest;
         EventEmployee.OnEmployeeFired -= Event_EmployFired;
         EventEmployee.OnEmployeeGetPayed -= Event_EmployeeGetPayed;
+        EventEmployee.OnEmployeeSkillAdded -= Event_OnEmployeeSkillAdded;
         EventEmployee.OnEmployeeDeath -= Event_EmployeeDeath;
     }
 
@@ -82,6 +85,15 @@ public class EmployeeManager : BaseBehaviour
         CreateNewEmployee();
     }
 
+    private void Event_OnEmployeeSkillAdded(EmployeeSkillAddedEventArgs employeeSkillAddedEventArgs)
+    {
+        if (_employees[employeeSkillAddedEventArgs.index] != null)
+        {
+            EmployeeSkill skill = _employeeSkills[Random.Range(0, _employeeSkills.Length)];
+            _employees[employeeSkillAddedEventArgs.index].AddSkill(skill);
+            UIManager.Instance.OpenWarningPopup($"<color=black>{_employees[employeeSkillAddedEventArgs.index].Name}¿Ã {skill.SkillName}∏¶ »πµÊ«œø¥Ω¿¥œ¥Ÿ.");
+        }
+    }
 
     private void CreateNewEmployee()
     {
@@ -90,7 +102,22 @@ public class EmployeeManager : BaseBehaviour
         _newEmployees = new HashSet<EmployeeStats>();
         for (int i = 0; i < c; i++)
         {
-            _newEmployees.Add(new EmployeeStats());
+            int s = Random.Range(0, 101);
+            List<EmployeeSkill> skills = new List<EmployeeSkill>();
+            if (s >= 95)
+            {
+                skills.Add(_employeeSkills[Random.Range(0, _employeeSkills.Length)]);
+                skills.Add(_employeeSkills[Random.Range(0, _employeeSkills.Length)]);
+            }
+            else if (s >= 80)
+            {
+                skills.Add(_employeeSkills[Random.Range(0, _employeeSkills.Length)]);
+            }
+            else
+            {
+
+            }
+            _newEmployees.Add(new EmployeeStats(skills.ToArray()));
         }
     }
 
@@ -158,12 +185,21 @@ public class EmployeeManager : BaseBehaviour
         _employees[employeeDeathEventArgs.index] = null;
         _employeeCount--;
     }
+
+    private void CheckRunAway()
+    {
+
+    }
+
+
+
+
+
 #if UNITY_EDITOR
     protected override void OnBindField()
     {
         base.OnBindField();
         EventEmployee = GetComponent<EmployeeEvent>();
-
     }
 #endif
 }

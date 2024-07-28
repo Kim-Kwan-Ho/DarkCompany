@@ -1,6 +1,8 @@
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,14 +22,19 @@ public class EmployeeStats
     private int _index;
     private bool _isDeath;
     public int Index { get { return _index; } }
-    public EmployeeStats()
+    public List<EmployeeSkill> EmployeeSkills;
+    public EmployeeSkillStat SkillStat;
+
+
+
+
+    public EmployeeStats(EmployeeSkill[] skills)
     {
         Ability = 1;
         Considerate = 1;
         Guts = 1;
         Stress = GameRule.STRESS_MIN;
         Pay = Random.Range(GameProbability.EMPLOYEE_START_PAY_MIN, GameProbability.EMPLOYEE_START_PAY_MAX);
-        PayTime = GameRule.PAY_TIME;
         _isDeath = false;
         int totalStat = Random.Range(GameProbability.EMPLOYEE_START_STATS_MIN, GameProbability.EMPLOYEE_START_STATS_MAX) - 3;
 
@@ -47,6 +54,38 @@ public class EmployeeStats
         Name += Names.LAST_NAME[Random.Range(0, Names.LAST_NAME.Length)];
         Name += Names.LAST_NAME[Random.Range(0, Names.LAST_NAME.Length)];
         IsSleeping = false;
+        SkillStat = new EmployeeSkillStat();
+        EmployeeSkills = skills.ToList();
+
+        foreach (var VARIABLE in skills)
+        {
+            AddSkillStat(VARIABLE.Stat);
+        }
+        PayTime = Random.Range(GameRule.PAY_TIME_MIN, GameRule.PAY_TIME_MAX) + SkillStat.PayTime;
+
+    }
+
+    public void AddSkill(EmployeeSkill skill)
+    {
+        EmployeeSkills.Add(skill);
+        AddSkillStat(skill.Stat);
+    }
+    public void AddSkillStat(EmployeeSkillStat stat)
+    {
+        SkillStat.PayTime += stat.PayTime;
+        SkillStat.PayBuff += stat.PayBuff;
+        SkillStat.RunawayPercent += stat.RunawayPercent;
+        SkillStat.StressBuff += stat.StressBuff;
+        SkillStat.WorkTime += stat.WorkTime;
+    }
+
+    public void RemoveSkillStat(EmployeeSkillStat stat)
+    {
+        SkillStat.PayTime -= stat.PayTime;
+        SkillStat.PayBuff -= stat.PayBuff;
+        SkillStat.RunawayPercent -= stat.RunawayPercent;
+        SkillStat.StressBuff -= stat.StressBuff;
+        SkillStat.WorkTime -= stat.WorkTime;
     }
 
     public void SetIndex(int index)
@@ -70,7 +109,7 @@ public class EmployeeStats
 
     private void CheckWorkTime()
     {
-        if (GameSceneManager.Instance.GameTime > GameRule.COMPANY_LEAVE_TIME)
+        if (GameSceneManager.Instance.GameTime > GameRule.COMPANY_LEAVE_TIME + SkillStat.WorkTime)
         {
             IncreaseStress(true, 20);
         }
@@ -114,7 +153,7 @@ public class EmployeeStats
         // 고쳐야함
         if (_isDeath)
             return;
-
+        amount = (int)(amount - ((amount * SkillStat.StressBuff) / 100));
         Stress += amount;
         Stress = Math.Min(Stress, 200);
         EmployeeManager.Instance.EventEmployee.CallEmployeeStressed(_index, amount);
@@ -163,7 +202,9 @@ public class EmployeeStats
 
     public void GetPayed()
     {
-        PayTime = GameRule.PAY_TIME;
+        PayTime = Random.Range(GameRule.PAY_TIME_MIN, GameRule.PAY_TIME_MAX) + SkillStat.PayTime;
     }
 
 }
+
+

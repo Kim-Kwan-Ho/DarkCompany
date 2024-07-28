@@ -1,5 +1,16 @@
 using UnityEngine;
 
+
+public class CompanyEventSO : ScriptableObject
+{
+    public int MinRange;
+    public int MaxRange;
+    protected int _amount;
+    public virtual void ActivateEvent()
+    {
+
+    }
+}
 public enum ECompanyPositiveEvent
 {
     MoneyIncrease,
@@ -12,15 +23,4 @@ public enum ECompanyNegativeEvent
     MoneyDecrease,
     MoneyDecreaseBuff,
     EmployeeStressIncrease
-}
-
-public class CompanyEventSO : ScriptableObject
-{
-    public int MinRange;
-    public int MaxRange;
-    protected int _amount;
-    public virtual void ActivateEvent()
-    {
-
-    }
 }

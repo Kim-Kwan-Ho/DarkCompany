@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 
@@ -5,6 +6,16 @@ using UnityEngine;
 public class EmployeeSkill : ScriptableObject
 {
     public string SkillName;
-    public string SkillDescription;
+    public bool IsPositive;
+    public EmployeeSkillStat Stat;
+}
 
+[Serializable]
+public class EmployeeSkillStat
+{
+    public int WorkTime = 0;
+    public int PayTime = 0;
+    public int StressBuff = 0;
+    public int PayBuff = 0;
+    public int RunawayPercent = 0;
 }

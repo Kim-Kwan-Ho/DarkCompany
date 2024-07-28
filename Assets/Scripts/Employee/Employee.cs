@@ -24,7 +24,7 @@ public class Employee : BaseBehaviour
     protected override void Initialize()
     {
         base.Initialize();
-        _payTime = GameRule.PAY_TIME;
+        _payTime = Random.Range(GameRule.PAY_TIME_MIN, GameRule.PAY_TIME_MAX);
         _curStress = GameRule.STRESS_MIN;
         _stressSkillCreated = false;
     }

@@ -11,7 +11,8 @@ public static class GameRule
     public const int STRESS_MIN = 0;
     public const int STRESS_SKILL_CREATEGAGE = 100;
     public const int STRESS_DECREASE_AMOUNT = 10;
-    public const int PAY_TIME = 4;
+    public const int PAY_TIME_MAX = 6;
+    public const int PAY_TIME_MIN = 3;
     public const int MAX_EMPLOYEE_COUNT = 6;
 
 
@@ -35,7 +36,7 @@ public static class GameProbability
     public const int EMPLOYEE_START_PAY_MIN = 100;
     public const int EMPLOYEE_START_PAY_MAX = 300;
 
-    public const int EVENT_COMPANY_APPEARANCE = 40;
+    public const int EVENT_COMPANY_APPEARANCE = 30;
     public const int EVENT_COMPANY_POSITIVE = 60;
 
 

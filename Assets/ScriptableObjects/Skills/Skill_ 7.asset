@@ -9,9 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9b514edad161ab4b93b72dc3a7b56b4, type: 3}
-  m_Name: NegativeCompanyEvent_ 1
+  m_Script: {fileID: 11500000, guid: d6bc14a6e2ff0234f9210549a82c7d09, type: 3}
+  m_Name: Skill_ 7
   m_EditorClassIdentifier: 
-  MinRange: 1
-  MaxRange: 30
-  EventType: 1
+  SkillName: "\u3139\u3137\u3141"
+  IsPositive: 0
+  Stat:
+    WorkTime: 0
+    PayTime: 0
+    StressBuff: 0
+    PayBuff: 0
+    RunawayPercent: 0

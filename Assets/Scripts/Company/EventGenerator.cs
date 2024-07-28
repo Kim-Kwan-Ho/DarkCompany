@@ -3,7 +3,9 @@ using UnityEngine;
 public class EventGenerator : BaseBehaviour
 {
 
-    [SerializeField] private CompanyEventSO[] _companyEvents; 
+    [SerializeField] private PositiveEventSo[] _companyPositiveEvents;
+    [SerializeField] private NegativeEventSo[] _companyNegativeEvents;
+
     private void OnEnable()
     {
         GameSceneManager.Instance.EventGameScene.OnNewDayStart += Event_OnNewDayStart;
@@ -16,21 +18,19 @@ public class EventGenerator : BaseBehaviour
 
     private void Event_OnNewDayStart()
     {
-        _companyEvents[0].ActivateEvent();
-
-        //if (CheckCompanyEvent())
-        //{
-        //    GenerateCompanyEvent();
-        //}
-        //if (GameSceneManager.Instance.Day == 0)
-        //    return;
+        if (GameSceneManager.Instance.Day == 0)
+            return;
+        if (CheckCompanyEvent())
+        {
+            GenerateCompanyEvent();
+        }
     }
 
     private bool CheckCompanyEvent()
     {
         int p = Random.Range(1, 101);
 
-        if (p >= GameProbability.EVENT_COMPANY_APPEARANCE)
+        if (p <= GameProbability.EVENT_COMPANY_APPEARANCE)
         {
             return true;
         }
@@ -43,14 +43,18 @@ public class EventGenerator : BaseBehaviour
     private void GenerateCompanyEvent()
     {
         int p = Random.Range(1, 101);
-        _companyEvents[0].ActivateEvent();
-        if (p >= GameProbability.EVENT_COMPANY_POSITIVE)
+
+        p += (UpgradeManager.Instance.Luck * 5);
+        if (p <= GameProbability.EVENT_COMPANY_POSITIVE)
         {
-            
+            // ºÎÁ¤Àû     
+            int c = Random.Range(0, _companyNegativeEvents.Length);
+            _companyNegativeEvents[c].ActivateEvent();
         }
         else
         {
-            
+            int c = Random.Range(0, _companyPositiveEvents.Length);
+            _companyPositiveEvents[c].ActivateEvent();
         }
     }
 }

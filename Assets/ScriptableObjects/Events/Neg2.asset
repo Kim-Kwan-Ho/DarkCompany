@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: PositiveCompanyEvent_
-  m_EditorClassIdentifier: Assembly-CSharp::PositiveEventSo
-  MinRange: 1000
-  MaxRange: 2000
-  EventType: 0
+  m_Script: {fileID: 11500000, guid: a9b514edad161ab4b93b72dc3a7b56b4, type: 3}
+  m_Name: Neg2
+  m_EditorClassIdentifier: 
+  MinRange: 5
+  MaxRange: 20
+  EventType: 2

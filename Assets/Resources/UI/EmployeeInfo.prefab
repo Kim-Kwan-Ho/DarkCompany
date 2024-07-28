@@ -1098,12 +1098,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 41.7
+  m_fontSize: 39.4
   m_fontSizeBase: 41.7
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 39.4
   m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -1114,7 +1114,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -1276,6 +1276,7 @@ MonoBehaviour:
   _payText: {fileID: 121296212025761599}
   _considerateText: {fileID: 883801269611332324}
   _hireButton: {fileID: 1743745093293438606}
+  _skillText: {fileID: 7154163327026616060}
 --- !u!1 &5759762013584335436
 GameObject:
   m_ObjectHideFlags: 0
