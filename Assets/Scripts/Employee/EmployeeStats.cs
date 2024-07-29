@@ -92,11 +92,6 @@ public class EmployeeStats
     {
         _index = index;
     }
-    public void UpgradeEmployee()
-    {
-
-    }
-
     public void IncreaseTime()
     {
         if (IsSleeping)
@@ -104,21 +99,29 @@ public class EmployeeStats
 
         CheckWorkTime();
         CheckPayTime();
-        MakeMoney();
+
+        int c = Random.Range(0, 5) + SkillStat.MoneyMakePercent;
+
+        if (c > 2)
+        {
+            MakeMoney();
+        }
     }
 
     private void CheckWorkTime()
     {
         if (GameSceneManager.Instance.GameTime > GameRule.COMPANY_LEAVE_TIME + SkillStat.WorkTime)
         {
-            IncreaseStress(true, 20);
+            int amount = GameRule.STRESS_WORKTIME_INCREASE - Random.Range(0, (int)(Guts * 1.5f));
+            IncreaseStress(amount);
         }
     }
     private void CheckPayTime()
     {
         if (PayTime <= 0)
         {
-            IncreaseStress(true, 10);
+            int amount = GameRule.STRESS_PAYTIME_INCREASE - Random.Range(0, Considerate);
+            IncreaseStress(amount);
         }
         else if (PayTime == 1)
         {
@@ -142,13 +145,12 @@ public class EmployeeStats
     }
     private void MakeMoney()
     {
-        //이것도 고쳐야함
-        int amount = 100;
+        int amount = Random.Range(GameRule.COMPANY_SALARY[UpgradeManager.Instance.ItemLevel], GameRule.COMPANY_SALARY[UpgradeManager.Instance.ItemLevel] + Random.Range(0, (Ability * 15)));
         amount += (int)(amount * (EmployeeManager.Instance.PayBuff / 100f));
         EmployeeManager.Instance.EventEmployee.CallEmployeeMadeMoney(_index, amount);
         GameSceneManager.Instance.EventGameScene.CallMoneyChanged(amount);
     }
-    public void IncreaseStress(bool paymentStressed, int amount)
+    public void IncreaseStress(int amount)
     {
         // 고쳐야함
         if (_isDeath)
@@ -157,7 +159,6 @@ public class EmployeeStats
         Stress += amount;
         Stress = Math.Min(Stress, 200);
         EmployeeManager.Instance.EventEmployee.CallEmployeeStressed(_index, amount);
-
         if (Stress == 200)
         {
             _isDeath = true;

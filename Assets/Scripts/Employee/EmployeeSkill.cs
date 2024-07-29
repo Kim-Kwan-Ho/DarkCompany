@@ -18,4 +18,5 @@ public class EmployeeSkillStat
     public int StressBuff = 0;
     public int PayBuff = 0;
     public int RunawayPercent = 0;
+    public int MoneyMakePercent = 0;
 }

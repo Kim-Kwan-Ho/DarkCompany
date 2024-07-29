@@ -6,7 +6,11 @@ public class WorkSpace : BaseBehaviour
 {
     [SerializeField] private GameObject[] _employees;
     [SerializeField] private GameObject[] _levels;
+    [SerializeField] private GameObject[] _itemLevel2;
+    [SerializeField] private GameObject[] _itemLevel3;
+
     private int _index;
+    private int _level;
     protected override void Initialize()
     {
         base.Initialize();
@@ -16,6 +20,7 @@ public class WorkSpace : BaseBehaviour
         }
 
         _index = 0;
+        _level = 0;
     }
 
     private void OnEnable()
@@ -28,7 +33,7 @@ public class WorkSpace : BaseBehaviour
         EmployeeManager.Instance.EventEmployee.OnEmployeeStressed += Event_EmployeeStressed;
         EmployeeManager.Instance.EventEmployee.OnEmployeeDeath += Event_EmployeeDeath;
         UpgradeManager.Instance.EventUpgrade.OnCompanyUpgrade += Event_CompanyUpgraded;
-
+        UpgradeManager.Instance.EventUpgrade.OnItemUpgrade += Event_ItemUpgraded;
     }
 
     private void OnDisable()
@@ -41,6 +46,7 @@ public class WorkSpace : BaseBehaviour
         EmployeeManager.Instance.EventEmployee.OnEmployeeStressed -= Event_EmployeeStressed;
         EmployeeManager.Instance.EventEmployee.OnEmployeeDeath -= Event_EmployeeDeath;
         UpgradeManager.Instance.EventUpgrade.OnCompanyUpgrade -= Event_CompanyUpgraded;
+        UpgradeManager.Instance.EventUpgrade.OnItemUpgrade -= Event_ItemUpgraded;
     }
 
 
@@ -68,6 +74,27 @@ public class WorkSpace : BaseBehaviour
         _index++;
     }
 
+    private void Event_ItemUpgraded()
+    {
+        if (_level == 0)
+        {
+            foreach (var VARIABLE in _itemLevel2)
+            {
+                VARIABLE.SetActive(true);
+            }
+        }
+        else
+        {
+            foreach (var VARIABLE in _itemLevel3)
+            {
+                VARIABLE.SetActive(true);
+
+            }
+        }
+
+        _level++;
+
+    }
     private void Event_EmployeeDeath(EmployeeDeathEventArgs employeeDeathEventArgs)
     {
         _employees[employeeDeathEventArgs.index].SetActive(false);

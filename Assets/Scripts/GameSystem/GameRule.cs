@@ -3,7 +3,7 @@ using UnityEngine;
 public static class GameRule
 {
 
-    public const int TIME_FOR_REALTIME = 1;
+    public const float TIME_FOR_REALTIME = 2.3f;
     public const int COMPANY_OPEN_TIME = 9;
     public const int COMPANY_CLOSE_TIME = 24;
     public const int COMPANY_LEAVE_TIME = 18;
@@ -17,7 +17,11 @@ public static class GameRule
 
 
     public const int COMPANY_START_MONEY = 1000;
-    public const int COMPANY_CHARGE_INCREASE = 100;
+    public const int COMPANY_CHARGE_INCREASE = 50;
+
+    public static readonly int[] COMPANY_SALARY = new int[] { 50, 30, 70, 100 };
+    public const int STRESS_WORKTIME_INCREASE = 20;
+    public const int STRESS_PAYTIME_INCREASE = 10;
 
 }
 

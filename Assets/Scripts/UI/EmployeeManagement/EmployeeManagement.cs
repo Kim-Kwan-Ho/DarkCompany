@@ -18,6 +18,9 @@ public class EmployeeManagement : UIPopup
         _employButton.onClick.AddListener(ClosePopup);
         _skillChangeButton.onClick.AddListener(OpenSkillChangePopup);
         _skillChangeButton.onClick.AddListener(ClosePopup);
+        _upgradeButton.onClick.AddListener(UpgradeEmployee);
+        _upgradeButton.onClick.AddListener(ClosePopup);
+
     }
 
 
@@ -32,7 +35,10 @@ public class EmployeeManagement : UIPopup
         UIManager.Instance.OpenPopup<SkillAddPopup>();
     }
 
-
+    private void UpgradeEmployee()
+    {
+        UIManager.Instance.OpenPopup<UpgradeEmployeePopup>();
+    }
 
 
 
