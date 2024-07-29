@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6b1831143eeac43b2bafe1abdd9684, type: 3}
   m_Name: Pos2
   m_EditorClassIdentifier: 
-  MinRange: 500
-  MaxRange: 2000
+  MinRange: 300
+  MaxRange: 900
   EventType: 1

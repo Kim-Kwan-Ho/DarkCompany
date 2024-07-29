@@ -13,8 +13,12 @@ public class UpgradeManager : BaseBehaviour
     private int _itemLevel;
     public int ItemLevel { get { return _itemLevel; } }
 
-    private int _luck;
-    public int Luck { get { return _luck;} }
+    public int Luck;
+
+    public int Loyalty;
+
+
+    public int FlowerCount;
     protected override void Awake()
     {
         base.Awake();
@@ -35,7 +39,9 @@ public class UpgradeManager : BaseBehaviour
         _companyLevel = 1;
         _itemLevel = 1;
         _recruitLevel = 1;
-        _luck = 0;
+        Luck = 0;
+        Loyalty = 0;
+        FlowerCount = 0;
     }
 
     private void OnEnable()

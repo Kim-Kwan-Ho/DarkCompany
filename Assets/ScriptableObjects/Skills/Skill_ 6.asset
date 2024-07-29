@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6bc14a6e2ff0234f9210549a82c7d09, type: 3}
   m_Name: Skill_ 6
   m_EditorClassIdentifier: 
-  SkillName: "\u3141\u3134\u3147"
-  IsPositive: 1
+  SkillName: "\uB3C4\uBCBD"
+  IsPositive: 0
   Stat:
     WorkTime: 0
     PayTime: 0
     StressBuff: 0
-    PayBuff: 0
+    PayBuff: -10
     RunawayPercent: 0
+    MoneyMakePercent: 0

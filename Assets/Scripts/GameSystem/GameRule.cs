@@ -16,7 +16,7 @@ public static class GameRule
     public const int MAX_EMPLOYEE_COUNT = 6;
 
 
-    public const int COMPANY_START_MONEY = 1000;
+    public const int COMPANY_START_MONEY = 300;
     public const int COMPANY_CHARGE_INCREASE = 50;
 
     public static readonly int[] COMPANY_SALARY = new int[] { 50, 30, 70, 100 };
@@ -46,7 +46,12 @@ public static class GameProbability
 
 }
 
-
+public static class EnvironmentsCost
+{
+    public const int LUCK_COST = 1000;
+    public const int FLOWER_COST = 1000;
+    public const int LOYALTY_COST = 1000;
+}
 public static class GameColor
 {
     public static Color MONEY_GREEN = Color.green;
@@ -59,7 +64,7 @@ public static class Names
     {
         "가", "나", "다", "라", "마", "바", "사",
          "당", "강", "진", "주", "대", "한", "민", "국",
-        "가","고","싶","직", "수","치","이","하","소","해","정","보","사","업"
+        "가","고","직", "수","치","이","하","소","해","정","보","사","업"
     };
     public static readonly string[] FIRST_NAME = new string[] { "김", "이", "박", "최", "정", "강", "조", "윤" };
 }

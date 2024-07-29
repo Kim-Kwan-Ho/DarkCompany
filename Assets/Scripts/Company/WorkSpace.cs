@@ -8,7 +8,7 @@ public class WorkSpace : BaseBehaviour
     [SerializeField] private GameObject[] _levels;
     [SerializeField] private GameObject[] _itemLevel2;
     [SerializeField] private GameObject[] _itemLevel3;
-
+    [SerializeField] private GameObject[] _flowers;
     private int _index;
     private int _level;
     protected override void Initialize()
@@ -34,6 +34,7 @@ public class WorkSpace : BaseBehaviour
         EmployeeManager.Instance.EventEmployee.OnEmployeeDeath += Event_EmployeeDeath;
         UpgradeManager.Instance.EventUpgrade.OnCompanyUpgrade += Event_CompanyUpgraded;
         UpgradeManager.Instance.EventUpgrade.OnItemUpgrade += Event_ItemUpgraded;
+        UpgradeManager.Instance.EventUpgrade.OnBuyFlower += Event_BuyFlower;
     }
 
     private void OnDisable()
@@ -45,11 +46,18 @@ public class WorkSpace : BaseBehaviour
         EmployeeManager.Instance.EventEmployee.OnEmployeeMadeMoney -= Event_EmployeeMadeMoney;
         EmployeeManager.Instance.EventEmployee.OnEmployeeStressed -= Event_EmployeeStressed;
         EmployeeManager.Instance.EventEmployee.OnEmployeeDeath -= Event_EmployeeDeath;
+        UpgradeManager.Instance.EventUpgrade.OnBuyFlower -= Event_BuyFlower;
         UpgradeManager.Instance.EventUpgrade.OnCompanyUpgrade -= Event_CompanyUpgraded;
         UpgradeManager.Instance.EventUpgrade.OnItemUpgrade -= Event_ItemUpgraded;
     }
 
-
+    private void Event_BuyFlower()
+    {
+        for (int i = 0; i < UpgradeManager.Instance.FlowerCount; i++)
+        {
+            _flowers[i].SetActive(true);
+        }
+    }
     private void Event_EmployeeHired(EmployeeHiredEventArgs employeeHiredEventArgs)
     {
         _employees[employeeHiredEventArgs.index].SetActive(true);

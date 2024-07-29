@@ -32,7 +32,7 @@ public class EmployeeStatInfo : UIPopup
     private void OnEnable()
     {
         GameSceneManager.Instance.EventGameScene.OnRequestNewDay += ClosePopup;
-
+        EmployeeManager.Instance.EventEmployee.OnEmployeeDeath += Event_EmployeeDeath;
         _fireButton.onClick.AddListener(FireEmployee);
         _fireButton.onClick.AddListener(ClosePopup);
         _leaveWorkButton.onClick.AddListener(LeaveWorkEmployee);
@@ -42,8 +42,16 @@ public class EmployeeStatInfo : UIPopup
     private void OnDisable()
     {
         GameSceneManager.Instance.EventGameScene.OnRequestNewDay -= ClosePopup;
+        EmployeeManager.Instance.EventEmployee.OnEmployeeDeath -= Event_EmployeeDeath;
     }
 
+    private void Event_EmployeeDeath(EmployeeDeathEventArgs employeeDeathEventArgs)
+    {
+        if (employeeDeathEventArgs.index == _index)
+        {
+            ClosePopup();
+        }
+    }
     public void SetStatInfo(EmployeeStats stats, int index)
     {
         _stats = stats;

@@ -24,7 +24,7 @@ public class EmployeeStats
     public int Index { get { return _index; } }
     public List<EmployeeSkill> EmployeeSkills;
     public EmployeeSkillStat SkillStat;
-
+    private bool _eventActed;
 
 
 
@@ -62,7 +62,7 @@ public class EmployeeStats
             AddSkillStat(VARIABLE.Stat);
         }
         PayTime = Random.Range(GameRule.PAY_TIME_MIN, GameRule.PAY_TIME_MAX) + SkillStat.PayTime;
-
+        _eventActed = false;
     }
 
     public void AddSkill(EmployeeSkill skill)
@@ -99,6 +99,7 @@ public class EmployeeStats
 
         CheckWorkTime();
         CheckPayTime();
+        CheckRandomEvent();
 
         int c = Random.Range(0, 5) + SkillStat.MoneyMakePercent;
 
@@ -159,10 +160,65 @@ public class EmployeeStats
         Stress += amount;
         Stress = Math.Min(Stress, 200);
         EmployeeManager.Instance.EventEmployee.CallEmployeeStressed(_index, amount);
-        if (Stress == 200)
+        if (Stress >= 200)
         {
             _isDeath = true;
             EmployeeDeath();
+        }
+    }
+
+    private void CheckRandomEvent()
+    {
+        if (_eventActed)
+            return;
+        int r = Random.Range(0, 10);
+
+        if (r < 2)
+        {
+            GetPositiveRandomEvent();
+        }
+        else if (r < 3)
+        {
+            int c = Random.Range(0, 10) - UpgradeManager.Instance.Luck;
+            if (c < 0)
+                return;
+            GetNegativeRandomEvent();
+        }
+    }
+
+    private void GetNegativeRandomEvent()
+    {
+        if (_isDeath)
+            return;
+
+        if (Stress >= 100 && PayTime <= 0)
+        {
+            int r = Random.Range(0, 50) + (Stress - 100) - (SkillStat.RunawayPercent * 10) - (UpgradeManager.Instance.Loyalty * 10);
+            if (r > 70)
+            {
+                EmployeeRunAway();
+                _eventActed = true;
+            }
+        }
+    }
+
+    private void GetPositiveRandomEvent()
+    {
+        _eventActed = true;
+        int r = Random.Range(0, 2);
+
+        if (r == 0)
+        {
+            int c = Random.Range(30, 300);
+
+            UIManager.Instance.OpenEventPopup($"{Name}의 영업 전략이 빛을 발하며 {c}의 영업이익을 창출했습니다!");
+            GameSceneManager.Instance.EventGameScene.CallMoneyChanged(c);
+        }
+        else
+        {
+            int s = Random.Range(5, 15);
+            UIManager.Instance.OpenEventPopup($"{Name}가 명상을 하여 스트레스 수치가 {s}만큼 감소했습니다! ");
+            InDeCreaseStress(false, s);
         }
     }
 
@@ -190,13 +246,20 @@ public class EmployeeStats
 
     private void EmployeeDeath()
     {
-        UIManager.Instance.OpenWarningPopup(Name + "이 스트레스로 인해 사망하였습니다.");
+        UIManager.Instance.OpenWarningPopup(Name + "가 스트레스로 인해 사망하였습니다.");
         EmployeeManager.Instance.EventEmployee.CallEmployeeDeath(_index);
+    }
 
+    private void EmployeeRunAway()
+    {
+        UIManager.Instance.OpenWarningPopup(Name + "가 스트레스를 받아 도망갔습니다.");
+        EmployeeManager.Instance.EventEmployee.CallEmployeeDeath(_index);
     }
     public void GoToWorkEmployee()
     {
         // 확률적 출근은 여기서 수정
+
+        _eventActed = false;
         IsSleeping = false;
         EmployeeManager.Instance.EventEmployee.CallEmployeeGoToWork(_index);
     }

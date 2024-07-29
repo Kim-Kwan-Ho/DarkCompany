@@ -7,6 +7,7 @@ public class UIButtons : BaseBehaviour
 {
     [SerializeField] private Button _officeUpgradeButton;
     [SerializeField] private Button _employeeManagementButton;
+    [SerializeField] private Button _addEnvironmentButton;
 
 
     protected override void Initialize()
@@ -14,6 +15,7 @@ public class UIButtons : BaseBehaviour
         base.Initialize();
         _officeUpgradeButton.onClick.AddListener(OpenOfficePopup);
         _employeeManagementButton.onClick.AddListener(OpenEmployPopup);
+        _addEnvironmentButton.onClick.AddListener(OpenEnvironmentPopup);
     }
 
 
@@ -27,13 +29,17 @@ public class UIButtons : BaseBehaviour
         UIManager.Instance.OpenPopup<EmployeeManagement>();
     }
 
-
+    private void OpenEnvironmentPopup()
+    {
+        UIManager.Instance.OpenPopup<EnvironmentPopup>();
+    }
 #if UNITY_EDITOR
     protected override void OnBindField()
     {
         base.OnBindField();
         _officeUpgradeButton = FindGameObjectInChildren<Button>("OfficeUpgradeButton");
         _employeeManagementButton = FindGameObjectInChildren<Button>("EmployeeManagementButton");
+        _addEnvironmentButton = FindGameObjectInChildren<Button>("AddEnvironmentsButton");
     }
 
 #endif

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b514edad161ab4b93b72dc3a7b56b4, type: 3}
   m_Name: Neg1
   m_EditorClassIdentifier: 
-  MinRange: 500
-  MaxRange: 1000
+  MinRange: 300
+  MaxRange: 700
   EventType: 0
